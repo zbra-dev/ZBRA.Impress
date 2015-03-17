@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{90BDB0D6-7B03-42B8-954C-37ACB0D9AEE5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Zbra.Impress</RootNamespace>
+    <AssemblyName>Zbra.Impress</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\CollectionExtentions.cs" />
+    <Compile Include="Collections\EnumCollections.cs" />
+    <Compile Include="Hash.cs" />
+    <Compile Include="InternalComparers.cs" />
+    <Compile Include="ConverterException.cs" />
+    <Compile Include="Collections\DictionaryExtentions.cs" />
+    <Compile Include="Collections\EmptySet.cs" />
+    <Compile Include="EnumConversionException.cs" />
+    <Compile Include="Collections\EnumerableExtensions.cs" />
+    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="EnumOutOfBoundsException.cs" />
+    <Compile Include="EnumUnderlyingTypeException.cs" />
+    <Compile Include="EnumUtils.cs" />
+    <Compile Include="GenericTypeConverter.cs" />
+    <Compile Include="Collections\ReadOnlyCollectionDecorator.cs" />
+    <Compile Include="Collections\ReadOnlyListEnumeratorDecorator.cs" />
+    <Compile Include="EmptyInterval.cs" />
+    <Compile Include="Interval.cs" />
+    <Compile Include="IntervalPoint.cs" />
+    <Compile Include="InvalidFormatConverterException.cs" />
+    <Compile Include="InvalidTypeConverterException.cs" />
+    <Compile Include="Collections\ListExtentions.cs" />
+    <Compile Include="Math\Fraction.cs" />
+    <Compile Include="Math\FractionExtensions.cs" />
+    <Compile Include="Math\NumbersExtentions.cs" />
+    <Compile Include="Math\RandomExtensions.cs" />
+    <Compile Include="Math\Rounding.cs" />
+    <Compile Include="Math\RoundingMode.cs" />
+    <Compile Include="Maybe.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Collections\ReadOnlyListDecorator.cs" />
+    <Compile Include="Collections\SingleSet.cs" />
+    <Compile Include="Reflection\ReflectionExtentions.cs" />
+    <Compile Include="Collections\SetExtentions.cs" />
+    <Compile Include="StringExtentions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
