@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     [Serializable]
     public class ValidationResult

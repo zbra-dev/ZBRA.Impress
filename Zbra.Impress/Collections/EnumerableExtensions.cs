@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public static class EnumerableExtensions
     {

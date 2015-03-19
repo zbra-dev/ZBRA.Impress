@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     /// <summary>
     /// Represents the preference for a given culture.

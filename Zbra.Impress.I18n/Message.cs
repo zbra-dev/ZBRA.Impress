@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public class Message
     {

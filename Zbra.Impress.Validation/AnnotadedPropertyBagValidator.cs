@@ -1,7 +1,7 @@
-﻿using Zbra.Impress.Validation.Annotations;
+﻿using ZBRA.Impress.Validation.Annotations;
 using System;
 using System.Reflection;
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class AnnotadedPropertyBagValidator<T> : PropertyBagValidator<T>
     {

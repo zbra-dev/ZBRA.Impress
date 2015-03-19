@@ -7,8 +7,8 @@
     <ProjectGuid>{90BDB0D6-7B03-42B8-954C-37ACB0D9AEE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zbra.Impress</RootNamespace>
-    <AssemblyName>Zbra.Impress</AssemblyName>
+    <RootNamespace>ZBRA.Impress</RootNamespace>
+    <AssemblyName>ZBRA.Impress</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

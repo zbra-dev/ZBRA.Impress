@@ -1,5 +1,5 @@
 ﻿
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public interface IMultiSet<T> : IReadOnlyMultiSet<T>
     {

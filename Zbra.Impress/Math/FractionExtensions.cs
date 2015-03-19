@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Zbra.Impress.Collections;
+using ZBRA.Impress.Collections;
 using System.Linq;
 
-namespace Zbra.Impress.Math
+namespace ZBRA.Impress.Math
 {
     public static class FractionExtensions
     {

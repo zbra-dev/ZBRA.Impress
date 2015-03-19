@@ -1,5 +1,5 @@
 ﻿
-namespace Zbra.Impress.Math
+namespace ZBRA.Impress.Math
 {
     public enum RoundingMode
     {

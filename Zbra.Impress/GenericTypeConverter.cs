@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-using Zbra.Impress.Collections;
+using ZBRA.Impress.Collections;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     public class GenericTypeConverter
     {

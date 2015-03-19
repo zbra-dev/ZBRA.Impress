@@ -1,5 +1,5 @@
 ﻿
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     /// <summary>
     /// Applies validation rules to the candidate. 

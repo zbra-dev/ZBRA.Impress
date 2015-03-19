@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     /// <summary>
     /// This implementations is not synchronized.

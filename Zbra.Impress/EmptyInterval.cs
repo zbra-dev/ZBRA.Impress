@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     internal sealed class EmptyInterval<T> : Interval<T> where T : IComparable<T>
     {

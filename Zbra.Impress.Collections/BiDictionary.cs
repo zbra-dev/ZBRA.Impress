@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public class BiDictionary<K, V> : AbstractBiDictionary<K, V>
     {

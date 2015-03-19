@@ -1,6 +1,6 @@
 ﻿
 using System.Threading;
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public static class MessageTranslatorRegistry
     {

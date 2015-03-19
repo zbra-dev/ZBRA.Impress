@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class EmailPatternValidator : IValidator<String>
     {

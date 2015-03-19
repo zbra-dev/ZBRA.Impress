@@ -1,6 +1,6 @@
 ﻿
 using System;
-namespace Zbra.Impress.Validation.Consistency
+namespace ZBRA.Impress.Validation.Consistency
 {
     public class ReturnParameterConsistencyException : Exception
     {

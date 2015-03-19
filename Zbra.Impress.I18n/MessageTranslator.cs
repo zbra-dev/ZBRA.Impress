@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public class MessageTranslator
     {

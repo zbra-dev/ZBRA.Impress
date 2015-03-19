@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public abstract class AbstractDictionaryMultiMap<K, V, C> : IMultiMap<K, V, C> where C : ICollection<V>
     {

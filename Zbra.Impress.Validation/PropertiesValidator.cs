@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class PropertiesValidator<T> : CompositeValidator<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class PropertyInvalidationReason : IInvalidationReason
     {

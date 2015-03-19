@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Zbra.Impress.Math
+namespace ZBRA.Impress.Math
 {
     public static class NumbersExtentions
     {

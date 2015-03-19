@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     public class Hash
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress.Math
+namespace ZBRA.Impress.Math
 {
     public static class RandomExtensions
     {

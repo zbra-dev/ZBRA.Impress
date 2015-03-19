@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Zbra.Impress.Reflection
+namespace ZBRA.Impress.Reflection
 {
     public static class ReflectionExtentions
     {

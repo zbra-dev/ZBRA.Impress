@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zbra.Impress", "Zbra.Impress\Zbra.Impress.csproj", "{90BDB0D6-7B03-42B8-954C-37ACB0D9AEE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress", "ZBRA.Impress\ZBRA.Impress.csproj", "{90BDB0D6-7B03-42B8-954C-37ACB0D9AEE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zbra.Impress.ExtraCollections", "Zbra.Impress.Collections\Zbra.Impress.ExtraCollections.csproj", "{A3E8BAA6-5E33-4B30-BC28-88D518583D1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.ExtraCollections", "ZBRA.Impress.Collections\ZBRA.Impress.ExtraCollections.csproj", "{A3E8BAA6-5E33-4B30-BC28-88D518583D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zbra.Impress.Globalization", "Zbra.Impress.I18n\Zbra.Impress.Globalization.csproj", "{E305D23F-9164-435A-BF8C-630EC07D3651}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.Globalization", "ZBRA.Impress.I18n\ZBRA.Impress.Globalization.csproj", "{E305D23F-9164-435A-BF8C-630EC07D3651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zbra.Impress.Validation", "Zbra.Impress.Validation\Zbra.Impress.Validation.csproj", "{8DEEB7BB-19E5-4190-A694-F8EBD59D6B71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.Validation", "ZBRA.Impress.Validation\ZBRA.Impress.Validation.csproj", "{8DEEB7BB-19E5-4190-A694-F8EBD59D6B71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

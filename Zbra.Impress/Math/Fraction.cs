@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Text;
 
-namespace Zbra.Impress.Math
+namespace ZBRA.Impress.Math
 {
     /// <summary>
     /// Represents a rational number that is not , necessarily, an integer.  Examples 2/3 , 8/5, 9/1, 0/1

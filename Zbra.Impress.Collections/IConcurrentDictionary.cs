@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public interface IConcurrentDictionary<K, V> : IDictionary<K, V>
     {

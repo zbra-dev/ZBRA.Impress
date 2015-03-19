@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public interface IReadOnlyMultiMap<K, V, C> : IEnumerable<KeyValuePair<K, C>> where C : IEnumerable<V>
     {

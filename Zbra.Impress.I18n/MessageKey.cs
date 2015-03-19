@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     /// <summary>
     /// Use this Attribute in enums to automaticly provide a message key for each enum value.

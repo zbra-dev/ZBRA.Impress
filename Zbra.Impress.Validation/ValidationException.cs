@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class ValidationException : Exception
     {

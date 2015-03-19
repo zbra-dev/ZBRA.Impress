@@ -1,11 +1,11 @@
 ﻿
-using Zbra.Impress.Validation.Annotations;
+using ZBRA.Impress.Validation.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Zbra.Impress.Validation.Consistency
+namespace ZBRA.Impress.Validation.Consistency
 {
     public class MethodReturnConsistencyValidator : IValidator<MethodReturnData>
     {

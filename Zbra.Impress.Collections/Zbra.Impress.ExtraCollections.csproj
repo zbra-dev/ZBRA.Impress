@@ -7,8 +7,8 @@
     <ProjectGuid>{A3E8BAA6-5E33-4B30-BC28-88D518583D1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zbra.Impress.Collections</RootNamespace>
-    <AssemblyName>Zbra.Impress.ExtraCollections</AssemblyName>
+    <RootNamespace>ZBRA.Impress.ExtraCollections</RootNamespace>
+    <AssemblyName>ZBRA.Impress.ExtraCollections</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -61,9 +61,9 @@
     <Compile Include="RevertedBiDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Zbra.Impress\Zbra.Impress.csproj">
+    <ProjectReference Include="..\ZBRA.Impress\ZBRA.Impress.csproj">
       <Project>{90bdb0d6-7b03-42b8-954c-37acb0d9aee5}</Project>
-      <Name>Zbra.Impress</Name>
+      <Name>ZBRA.Impress</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

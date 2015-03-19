@@ -7,8 +7,8 @@
     <ProjectGuid>{8DEEB7BB-19E5-4190-A694-F8EBD59D6B71}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zbra.Impress.Validation</RootNamespace>
-    <AssemblyName>Zbra.Impress.Validation</AssemblyName>
+    <RootNamespace>ZBRA.Impress.Validation</RootNamespace>
+    <AssemblyName>ZBRA.Impress.Validation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

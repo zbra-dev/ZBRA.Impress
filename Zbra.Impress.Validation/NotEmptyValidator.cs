@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.Generic;
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class NotEmptyValidator<T> : IValidator<T>
     {

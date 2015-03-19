@@ -4,7 +4,7 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public class ResourceManagerMessageProcessor : IMessageProcessor
     {

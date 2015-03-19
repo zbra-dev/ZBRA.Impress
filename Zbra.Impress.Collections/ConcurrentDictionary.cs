@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     public class ConcurrentDictionary<K, V> : IConcurrentDictionary<K, V>
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Zbra.Impress.Collections
+namespace ZBRA.Impress.Collections
 {
     /// <summary>
     /// This implementations is not synchronized.

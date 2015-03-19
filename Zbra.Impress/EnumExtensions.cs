@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     public static class EnumExtensions
     {

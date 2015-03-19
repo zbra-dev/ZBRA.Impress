@@ -1,5 +1,5 @@
 ﻿
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public class MessageTranslation
     {

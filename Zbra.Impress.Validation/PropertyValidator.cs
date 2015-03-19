@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Zbra.Impress.Validation
+namespace ZBRA.Impress.Validation
 {
     public class PropertyValidator<T> : CompositeValidator<T>
     {

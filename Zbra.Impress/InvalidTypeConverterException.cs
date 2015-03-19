@@ -1,5 +1,5 @@
 ﻿
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     public class InvalidTypeConverterException : ConverterException
     {

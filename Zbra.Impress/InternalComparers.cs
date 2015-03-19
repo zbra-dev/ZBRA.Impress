@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     internal class ComparableComparer<T> : IComparer<T> where T : IComparable<T>
     {

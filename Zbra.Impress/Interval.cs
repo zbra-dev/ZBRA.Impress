@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress
+namespace ZBRA.Impress
 {
     public class Interval<T> where T : IComparable<T>
     {

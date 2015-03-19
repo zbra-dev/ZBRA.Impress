@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Zbra.Impress.Globalization
+namespace ZBRA.Impress.Globalization
 {
     public class CompositeMessageProcessor : IMessageProcessor
     {

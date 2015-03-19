@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zbra.Impress.Validation.Annotations
+namespace ZBRA.Impress.Validation.Annotations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class LengthAttribute : Attribute, IValidationAttribute
