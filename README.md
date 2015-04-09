@@ -2,8 +2,8 @@
 Useful classes for .NET everyday projects.
 
 # Description
-ZBRA Impress is a C# written library that aims to improve the programmer's experience when coding .NET aplications.
-The goal is to make it a simpler, more fluent and fun experience. This is done by means of removing bloiler plate code by introducing more powerful astractions.
+ZBRA Impress is a C# written library that aims to improve the programmer's experience when coding .NET applications.
+The goal is to make it a simpler, more fluent and fun experience. This is done by means of removing bloilerplate code by introducing more powerful asbtractions.
 As a simple example you can do this :
 
 	var dictionary = new Dictionary<int, int> (); // loaded with month to number of days in month
@@ -69,5 +69,5 @@ Translation strategies can be composed by means of ```IMessageProcessor```.
 
 #ZBRA Impress Validation
 
-Provides an extensible validation bramework to use in any layer of you aplication. The frameworks leverages Generic types and reification to allow composition of validators. 
+Provides an extensible validation framework to use in any layer of you application. The frameworks leverages Generic types and reification to allow composition of validators. 
 Attributes can be used for simple POCO validation with ```AnnotatedPropertyBagValidator``` but you can opt-in for this strategy as it is not mandatory.
