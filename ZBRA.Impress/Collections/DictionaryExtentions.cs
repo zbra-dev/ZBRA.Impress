@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZBRA.Impress.Collections
 {
@@ -43,20 +44,101 @@ namespace ZBRA.Impress.Collections
                 return false;
             }
         }
-        public static Maybe<V> MaybeGet<K, V>(this IDictionary<K, V> dictionary, K key)
+
+        public static Maybe<V> MaybeGet<K, V>(this IEnumerable<KeyValuePair<K, V>> dictionary, K key)
         {
+            return DoMaybeGet(dictionary, key);
+        }
+
+        private static Maybe<V> DoMaybeGet<K, V>(this IEnumerable<KeyValuePair<K, V>> dictionary, K key)
+        {
+
             V value;
-            if (dictionary.Count != 0 && dictionary.TryGetValue(key, out value))
+            if (DoGeneralTryGetValue(dictionary, key, out value))
             {
                 return value.ToMaybe();
             }
             return Maybe<V>.Nothing;
         }
 
-        public static Maybe<V> MaybeGet<K, V>(this IDictionary<K, Maybe<V>> dictionary, K key)
+        /// <summary>
+        /// Reads a value from a dictionary. Returns false if the key does not exist on the dictionary.
+        /// This method is compatible with IReadOnlyDictionary and IDictionary and tries to cast to them when possible. 
+        /// This is due to a limitation on the .NET api design where IDictionary does not implement IReadOnlyDictionary creating
+        /// an ambigousity for the extention resolution algorithm to handle. 
+        /// To circunvein this problem, this method allows for any IEnumrable of KeyValuePair since is the only 
+        /// common interface for both IreadOnlyDictionary and IDictionary. 
+        /// The method will try to use the TryGetValue on the IDictionary and IReadOnlyInterfaces, and falls back to a linear search 
+        /// if the object does not implement one of those
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private static bool DoGeneralTryGetValue<K, V>(this IEnumerable<KeyValuePair<K, V>> dictionary, K key, out  V value)
+        {
+            if (dictionary == null || !dictionary.Any())
+            {
+                value = default(V);
+                return false;
+            }
+
+
+            //  most common since is the mutable version
+            IDictionary<K, V> readOther = dictionary as IDictionary<K, V>;
+
+            if (readOther == null)
+            {
+                // thy this one before falling back to list search
+                IReadOnlyDictionary<K, V> dic = dictionary as IReadOnlyDictionary<K, V>;
+
+                if (dic == null)
+                {
+                    // fall back to direct search
+                    // use to List to overcome the problem with SingleOrDefault since if 
+                    // V is a struct the default is a , possible and otherwise present, value.
+                    var list = dictionary.Where(pair => pair.Key.Equals(key)).ToList();
+                    if (list.Count > 0)
+                    {
+                        value = list[0].Value;
+                        return true;
+                    }
+                }
+                else
+                {
+                    return dic.TryGetValue(key, out value);
+                }
+            }
+            else
+            {
+                return readOther.TryGetValue(key, out value);
+            }
+
+
+            value = default(V);
+            return false;
+        }
+
+        public static Maybe<V> MaybeGet<K, V>(this IEnumerable<KeyValuePair<K, V>> dictionary, Maybe<K> key)
+        {
+            if (key.HasValue)
+            {
+                return DoMaybeGet(dictionary, key.Value);
+            }
+
+            return Maybe<V>.Nothing;
+        }
+
+        public static Maybe<V> MaybeGet<K, V>(this IEnumerable<KeyValuePair<K, Maybe<V>>> dictionary, K key)
+        {
+            return DoMaybeGetOnDictionaryWithMaybeValues(dictionary, key);
+        }
+
+        private static Maybe<V> DoMaybeGetOnDictionaryWithMaybeValues<K, V>(this IEnumerable<KeyValuePair<K, Maybe<V>>> dictionary, K key)
         {
             Maybe<V> value;
-            if (dictionary.Count != 0 && dictionary.TryGetValue(key, out value))
+            if (DoGeneralTryGetValue(dictionary, key, out value))
             {
                 return value;
             }

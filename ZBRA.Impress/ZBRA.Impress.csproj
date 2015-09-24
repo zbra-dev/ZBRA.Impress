@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\CollectionExtentions.cs" />
+    <Compile Include="Collections\EmptyCollections.cs" />
     <Compile Include="Collections\EnumCollections.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="InternalComparers.cs" />

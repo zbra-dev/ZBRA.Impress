@@ -8,6 +8,7 @@ namespace ZBRA.Impress.Collections
     public static class EnumerableExtensions
     {
 
+
         public static Maybe<T> MaybeSingle<T>(this IEnumerable<Nullable<T>> enumerable) where T : struct
         {
             return enumerable == null ? Maybe<T>.Nothing : enumerable.SingleOrDefault<Nullable<T>>().ToMaybe<T>();
@@ -19,28 +20,29 @@ namespace ZBRA.Impress.Collections
             {
                 return Maybe<T>.Nothing;
             }
-
-            T value = enumerable.SingleOrDefault();
-            if (typeof(T).IsValueType && value.Equals(default(T)))
+            try
+            {
+                return enumerable.Single().ToMaybe();
+            }
+            catch (InvalidOperationException)
             {
                 return Maybe<T>.Nothing;
             }
-            return value.ToMaybe();
         }
 
         public static Maybe<T> MaybeSingle<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate)
         {
-            return enumerable == null ? Maybe<T>.Nothing : enumerable.Where(predicate).MaybeSingle();
+            return MaybeSingle(enumerable.Where(predicate));
         }
 
         public static Maybe<T> MaybeFirst<T>(this IEnumerable<T> enumerable) where T : class
         {
-            return enumerable == null ? Maybe<T>.Nothing : enumerable.FirstOrDefault().ToMaybe();
+            return (enumerable == null || !enumerable.Any()) ? Maybe<T>.Nothing : enumerable.First().ToMaybe();
         }
 
         public static Maybe<T> MaybeFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate) where T : class
         {
-            return enumerable == null ? Maybe<T>.Nothing : enumerable.Where(predicate).MaybeFirst();
+            return MaybeFirst(enumerable.Where(predicate));
         }
 
         public static Maybe<T> MaybeFirst<T>(this IEnumerable<Nullable<T>> enumerable) where T : struct
@@ -48,12 +50,66 @@ namespace ZBRA.Impress.Collections
             return enumerable == null ? Maybe<T>.Nothing : enumerable.FirstOrDefault<Nullable<T>>().ToMaybe<T>();
         }
 
+        public static Maybe<T> ElementAtRandom<T>(this ICollection<T> collection, Random randomNumberGenerator)
+        {
+            if (collection == null || !collection.Any())
+            {
+                return Maybe<T>.Nothing;
+            }
+            else if (collection.Count == 1)
+            {
+                return collection.First().ToMaybe();
+            }
+
+            return collection.ElementAt(randomNumberGenerator.Next(0, collection.Count)).ToMaybe();
+        }
+
+        public static Maybe<T> ElementAtRandom<T>(this IList<T> list, Random randomNumberGenerator)
+        {
+            if (list == null || !list.Any())
+            {
+                return Maybe<T>.Nothing;
+            }
+            else if (list.Count == 1)
+            {
+                return list[0].ToMaybe();
+            }
+
+            return list[randomNumberGenerator.Next(0, list.Count)].ToMaybe();
+        }
+
+        public static Maybe<T> ElementAtRandom<T>(this IEnumerable<T> enumerable, Random randomNumberGenerator)
+        {
+            if (enumerable == null)
+            {
+                return Maybe<T>.Nothing;
+            }
+
+            var count = enumerable.Count();
+            if (count == 0)
+            {
+                return Maybe<T>.Nothing;
+            }
+            else if (count == 1)
+            {
+                return enumerable.First().ToMaybe();
+            }
+
+            return enumerable.ElementAt(randomNumberGenerator.Next(0, count)).ToMaybe();
+        }
+
+
+        public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> items)
+        {
+            return items == null ? new T[0] : items;
+        }
+
         public static IEnumerable<T> OrEmpty<T>(this Maybe<IEnumerable<T>> maybe)
         {
             return maybe.Or(Enumerable.Empty<T>());
         }
 
-        public static IEnumerable<T> Change<T>(this IEnumerable<T> elements, Action<T> action)
+        public static IEnumerable<T> Peek<T>(this IEnumerable<T> elements, Action<T> action)
         {
             return elements.Select(m => { action(m); return m; });
         }
@@ -85,23 +141,37 @@ namespace ZBRA.Impress.Collections
             }
         }
 
-        public static IEnumerable<T> ExcludeNothing<T>(this IEnumerable<Maybe<T>> elements)
+        /// <summary>
+        /// Removes all Nothing values in the given enumerable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="elements"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Compact<T>(this IEnumerable<Maybe<T>> elements)
         {
             return elements.Where(m => m.HasValue).Select(m => m.Value);
         }
 
-        public static IEnumerable<S> ExcludeNothing<S>(this IEnumerable<Nullable<S>> elements) where S : struct
+        /// <summary>
+        /// Removes all null values in the given enumerable.
+        /// </summary>
+        /// <typeparam name="S"></typeparam>
+        /// <param name="elements"></param>
+        /// <returns></returns>
+        public static IEnumerable<S> Compact<S>(this IEnumerable<Nullable<S>> elements) where S : struct
         {
             return elements.Where(m => m.HasValue).Select(m => m.Value);
         }
 
-        public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> elements)
+        /// <summary>
+        /// Removes all null values in the given enumerable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="elements"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Compact<T>(this IEnumerable<T> elements)
         {
-            if (elements == null)
-            {
-                return new List<T>();
-            }
-            return elements;
+            return elements.Where(m => m != null);
         }
 
         public static IEnumerable<S> Convert<S>(this IEnumerable<string> elements) where S : struct
@@ -163,18 +233,14 @@ namespace ZBRA.Impress.Collections
 
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, T obj)
         {
-            return enumerable.Concat(FromSingle(obj));
+            return enumerable.Concat(Enumerable.Repeat(obj, 1));
         }
 
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, Maybe<T> maybe)
         {
-            return maybe.HasValue ? enumerable.Concat(FromSingle(maybe.Value)) : enumerable;
+            return maybe.HasValue ? enumerable.Concat(Enumerable.Repeat(maybe.Value, 1)) : enumerable;
         }
 
-        private static IEnumerable<T> FromSingle<T>(T obj)
-        {
-            yield return obj;
-        }
 
         public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> enumerable, Comparison<T> comparison)
         {

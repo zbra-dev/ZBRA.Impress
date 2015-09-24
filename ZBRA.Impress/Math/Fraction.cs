@@ -15,6 +15,7 @@ namespace ZBRA.Impress.Math
     /// 
     /// Using doubles a for loop that suns 0.1 ten times does not result in 1. Using Fraction it does.
     /// 
+    /// For creating a fraction prefer the ValueOf overloads that use integers or strings. Use the other overloads only in conversion scenarios.
     /// 
     /// Internally this implementation uses BigInteger to retain the numerator and denominator values. 
     /// After each calculation the fraction is simplified so the numerator and denominator are always coprimes.
@@ -25,14 +26,56 @@ namespace ZBRA.Impress.Math
         public static readonly Fraction Zero = new Fraction(0, 1);
         public static readonly Fraction One = new Fraction(1, 1);
 
+        /// <summary>
+        /// Aproximates PI with accuracy  of 1E10^-38                               
+        /// </summary>
+        public static readonly Fraction PI = new Fraction(2646693125139304345, 842468587426513207);
+
+
+        /// <summary>
+        /// Aproximates E with accuracy  of 1E10^-38                               
+        /// </summary>
+        public static readonly Fraction E = Fraction.ValueOf("10873127313836180941441149885410649991", "4000000000000000000000000000000000000");
+
         private BigInteger numerator;
         private BigInteger denominator;
 
+        /// <summary>
+        /// Creates a Fraction with a value equivalent to the given long number.
+        /// The same as Fraction.ValueOf(number, 1).
+        /// 
+        /// </summary>
+        /// <param name="number">The original value</param>
+        /// <returns>The rational equivalent to the given value</returns>
         public static Fraction ValueOf(long number)
         {
             return new Fraction(number, 1);
         }
 
+        /// <summary>
+        /// Creates a Fraction with a value equivalent to the given decimal number.
+        /// 
+        /// number is checked to be whole. If it is, then this equivalent to 
+        /// Fraction.ValueOf(number.ToString())
+        /// 
+        /// If number is not a whole number, the sistem will determine the power of 10 that multiplied be 
+        /// the given value turn the value to a hole number. Then return a fraction that is that whole number 
+        /// divided by the determined power of ten.
+        /// 
+        /// Example: for the 0.20 value the power used whould be 100 so that 
+        /// 
+        /// 20 = 100 * 0.20
+        /// 
+        /// The the fraction whould then be  20/ 100 that is equivalent to 2/10 that is equivalent to 1/5. 
+        /// So this method would finally return 1/5. 
+        /// 
+        /// For irracional number like Math.PI the same algorithm applies since double and decimal are only able to represent aproximmated 
+        /// values of racional numbers. For the cases of PI and E , if you are interested in better aproximations, 
+        /// please consider using Fraction.PI and Fraction.E constants
+        /// 
+        /// </summary>
+        /// <param name="number">The original value</param>
+        /// <returns>The rational equivalent to the given value</returns>
         public static Fraction ValueOf(decimal number)
         {
             if (number.IsInteger())
@@ -44,6 +87,24 @@ namespace ZBRA.Impress.Math
             return FromDecimalStringLiteral(new DecimalConverter().ConvertToInvariantString(number));
         }
 
+        /// <summary>
+        /// Creates a Fraction with a value equivalent to the given decimal number represented in the given string.
+        /// </summary>
+        /// <param name="number">The original value</param>
+        /// <returns>The rational equivalent to the given value</returns>
+        public static Fraction ValueOf(string number)
+        {
+            return FromDecimalStringLiteral(number);
+        }
+
+
+        /// <summary>
+        /// Creates a Fraction with a value equivalent to the given double number.
+        /// 
+        /// Please avoid using this method whenever possible. Prefer the overloads that use decimal , ints or string.
+        /// </summary>
+        /// <param name="number">The original value</param>
+        /// <returns>The rational equivalent to the given value</returns>
         public static Fraction ValueOf(double number)
         {
             if (number.IsInteger())
@@ -70,9 +131,14 @@ namespace ZBRA.Impress.Math
                 else
                 {
                     var builder = new StringBuilder(str.Replace(".", ""));
-                    while (builder[0] == '0')
+                    while (builder.Length > 0 && builder[0] == '0')
                     {
                         builder.Remove(0, 1);
+                    }
+
+                    if (builder.Length == 0)
+                    {
+                        return Fraction.Zero;
                     }
 
                     var expo = str.Length - pos - 1;
@@ -98,7 +164,32 @@ namespace ZBRA.Impress.Math
 
         }
 
+        /// <summary>
+        /// Creates a Fraction from the values in the string arguments.
+        /// The strings must parse to valid whole values.
+        /// This method is entended to be use when the values do not fit a long
+        /// </summary>
+        /// <param name="numerator"></param>
+        /// <param name="denominator"></param>
+        /// <returns></returns>
+        public static Fraction ValueOf(string numerator, string denominator)
+        {
+            return ValueOf(BigInteger.Parse(numerator), BigInteger.Parse(denominator));
+        }
+
+        /// <summary>
+        /// Creates a Fraction from the given values in the form numerator/denominator.
+        /// 
+        /// </summary>
+        /// <param name="numerator"></param>
+        /// <param name="denominator"></param>
+        /// <returns></returns>
         public static Fraction ValueOf(long numerator, long denominator)
+        {
+            return ValueOf(new BigInteger(numerator), new BigInteger(denominator));
+        }
+
+        private static Fraction ValueOf(BigInteger numerator, BigInteger denominator)
         {
             if (denominator == 0)
             {
@@ -147,26 +238,49 @@ namespace ZBRA.Impress.Math
 
         }
 
+        /// <summary>
+        /// Determines if the Fraction is zero, i.e. if this.Equals(Fraction.Zero) will return true.
+        /// </summary>
+        /// <returns>true if the Fraction is zero, false otherwise</returns>
         public bool IsZero()
         {
             return this.numerator == 0 || this.denominator == 0;
         }
 
+        /// <summary>
+        /// Determines if the Fraction is one, i.e. if this.Equals(Fraction.One) will return true.
+        /// </summary>
+        /// <returns>true if the Fraction is one, false otherwise</returns>
         public bool IsOne()
         {
             return this.numerator.CompareTo(this.denominator) == 0;
         }
 
+        /// <summary>
+        /// Multiplies this fraction by another.
+        /// </summary>
+        /// <param name="other">other fraction to multiply</param>
+        /// <returns>the product of the fractions</returns>
         public Fraction Times(Fraction other)
         {
             return Multiply(this, other);
         }
 
+        /// <summary>
+        /// Multiplies this fraction by a decimal value.
+        /// </summary>
+        /// <param name="other">value to multiply</param>
+        /// <returns>the product of the fractions</returns>
         public Fraction Times(decimal other)
         {
             return Multiply(this, Fraction.ValueOf(other));
         }
 
+        /// <summary>
+        /// Returns this fraction with the signal changed, i.e. return -this
+        /// 
+        /// </summary>
+        /// <returns>-this</returns>
         public Fraction Negate()
         {
             return new Fraction(-this.numerator, this.denominator);
@@ -174,7 +288,7 @@ namespace ZBRA.Impress.Math
 
         /// <summary>
         ///  Inverts the fraction. Fraction a/b will be b/a. 
-        ///  An ArithmeticException will be throwned if fraction.IsZero is true.
+        ///  An ArithmeticException will be throwned if this.IsZero is true.
         /// </summary>
         /// <returns></returns>
         public Fraction Invert()
@@ -298,6 +412,10 @@ namespace ZBRA.Impress.Math
         /// <returns></returns>
         public static Fraction operator /(int left, Fraction right)
         {
+            if (left == 1)
+            {
+                return right.Invert();
+            }
             return DivideIntInverse(left, right);
         }
 
@@ -334,34 +452,64 @@ namespace ZBRA.Impress.Math
             }
         }
 
+        /// <summary>
+        /// Increment the fraction by one
+        /// </summary>
+        /// <param name="value"> fraction to increment</param>
+        /// <returns>this + 1</returns>
         public static Fraction operator ++(Fraction value)
         {
             return value.Increment();
         }
 
+        /// <summary>
+        /// Decrements the fraction by one
+        /// </summary>
+        /// <param name="value"> fraction to increment</param>
+        /// <returns>this - 1</returns>
         public static Fraction operator --(Fraction value)
         {
             return value.Decrement();
         }
 
+        /// <summary>
+        /// Increment the fraction by one
+        /// </summary>
+        /// <param name="value"> fraction to increment</param>
+        /// <returns>this + 1</returns>
         public Fraction Increment()
         {
             // (a / b) + 1 = (a+b) / b
             return new Fraction(this.numerator + this.denominator, this.denominator);
         }
 
+        /// <summary>
+        /// Increment the fraction by n
+        /// </summary>
+        /// <param name="n">value to increment</param>
+        /// <returns>this + n</returns>
         public Fraction Increment(int n)
         {
             // (a / b) + n = (a+b*n) / b
             return new Fraction(this.numerator + (this.denominator * new BigInteger(n)), this.denominator);
         }
 
+        /// <summary>
+        /// Decrements the fraction by one
+        /// </summary>
+        /// <param name="value"> fraction to increment</param>
+        /// <returns>this - 1</returns>
         public Fraction Decrement()
         {
             // a / b - 1 = (a-b) / b
             return new Fraction(this.numerator - this.denominator, this.denominator);
         }
 
+        /// <summary>
+        /// Decrement the fraction by n
+        /// </summary>
+        /// <param name="n">value to decrement</param>
+        /// <returns>this - n</returns>
         public Fraction Decrement(int n)
         {
             // a / b - n = (a-b*n) / b
@@ -467,6 +615,11 @@ namespace ZBRA.Impress.Math
 
         #endregion
 
+        /// <summary>
+        /// Determines if the fraction is undefined. 
+        /// A fraction is undefined if the denominator is zero.
+        /// </summary>
+        /// <returns>true if the fraction is undefined, false otherwise</returns>
         public bool IsUndefined()
         {
             return denominator.IsZero;
@@ -482,6 +635,12 @@ namespace ZBRA.Impress.Math
             return this.IsZero() ? Fraction.Zero : this;
         }
 
+        /// <summary>
+        /// Compares to fractions for order.
+        /// The comparison does not convert the fraction to decimal.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Fraction other)
         {
             var dthis = this.Define();
@@ -502,6 +661,11 @@ namespace ZBRA.Impress.Math
 
         }
 
+        /// <summary>
+        /// Converts the fraction to a decimal.
+        /// The conversion my remove the precision present in the fraction.
+        /// </summary>
+        /// <returns></returns>
         public decimal ToDecimal()
         {
             if (this.denominator.IsOne)
@@ -514,13 +678,32 @@ namespace ZBRA.Impress.Math
             }
             else
             {
-                var nn = (decimal)this.numerator;
-                var dn = (decimal)this.denominator;
+                try
+                {
+                    var nn = (decimal)this.numerator;
+                    var dn = (decimal)this.denominator;
 
-                return nn / dn;
+                    return nn / dn;
+                }
+                catch (OverflowException)
+                {
+                    // big integer it too large to fit a decimal 
+                    // use logrithm reduction
+
+                    int sgn = this.numerator.Sign * this.denominator.Sign;
+
+                    var ln = BigInteger.Log(BigInteger.Abs(this.numerator));
+                    var ld = BigInteger.Log(BigInteger.Abs(this.denominator));
+                    return (decimal)System.Math.Exp(ln - ld) * sgn;
+                }
             }
         }
 
+        /// <summary>
+        /// Converts the fraction to a double.
+        /// The conversion my remove the precision present in the fraction.
+        /// </summary>
+        /// <returns></returns>
         public double ToDouble()
         {
             if (this.denominator.IsOne)
@@ -533,10 +716,33 @@ namespace ZBRA.Impress.Math
             }
             else
             {
-                return (double)this.numerator / (double)this.denominator;
+
+                try
+                {
+                    var nn = (double)this.numerator;
+                    var dn = (double)this.denominator;
+
+                    return nn / dn;
+                }
+                catch (OverflowException)
+                {
+                    // big integer it too large to fit a double 
+                    // use logrithm reduction
+
+                    int sgn = this.numerator.Sign * this.denominator.Sign;
+
+                    var ln = BigInteger.Log(BigInteger.Abs(this.numerator));
+                    var ld = BigInteger.Log(BigInteger.Abs(this.denominator));
+                    return System.Math.Exp(ln - ld) * sgn;
+                }
+
             }
         }
 
+        /// <summary>
+        /// Converts the fraction to a double with the given decimals
+        /// </summary>
+        /// <returns></returns>
         public double ToDouble(int decimals)
         {
             return Convert.ToDouble(ToDecimal().Round(decimals, RoundingMode.RoundHalfUp));
@@ -564,6 +770,13 @@ namespace ZBRA.Impress.Math
             return string.Format("{0}/{1}", numerator, denominator);
         }
 
+        /// <summary>
+        /// Calculates the exponent power of this fraction.
+        /// This is equivalent to raizing he numerator and denominator to the same power.
+        /// 
+        /// </summary>
+        /// <param name="exponent"></param>
+        /// <returns></returns>
         public Fraction Pow(int exponent)
         {
             if (exponent == 0)
@@ -574,10 +787,15 @@ namespace ZBRA.Impress.Math
                 }
                 return Fraction.One;
             }
+            else if (this.IsZero() && exponent < 0)
+            {
+                throw new ArgumentException("Cannot invert 0");
+            }
             else if (this.IsZero() || this.IsOne() || exponent == 1)
             {
                 return this;
             }
+
 
             if (exponent < 0)
             {
@@ -589,24 +807,138 @@ namespace ZBRA.Impress.Math
             }
         }
 
-        public BigInteger Ceilling
+        /// <summary>
+        /// Return the fraction with the value equivalent to the closest whole number that is greater the the value of the fraction.
+        /// </summary>
+        public Fraction Ceilling
         {
             get
             {
-                return (numerator + denominator - 1) / denominator;
+                if (numerator.Sign == -1)
+                {
+                    return this.Negate().Floor.Negate();
+                }
+                else
+                {
+                    //extracted from http://www.cs.nott.ac.uk/~rcb/G51MPC/slides/NumberLogic.pdf
+                    return new Fraction((numerator + denominator - 1) / denominator, BigInteger.One);
+                }
             }
 
         }
 
-        public BigInteger Floor
+        /// <summary>
+        /// Return the fraction with the value equivalent to the closest whole number that is less than the value of the fraction.
+        /// </summary>
+        public Fraction Floor
         {
             get
             {
-                return numerator / denominator;
+                if (numerator.Sign == -1)
+                {
+                    return this.Negate().Ceilling.Negate();
+                }
+                else
+                {
+                    return new Fraction(numerator / denominator, BigInteger.One);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return the int with the value equivalent to the closest whole number that is less than the value of the fraction.
+        /// </summary>
+        public int IntFloor
+        {
+            get
+            {
+                var n = numerator / denominator;
+                if (n >= int.MinValue && n <= int.MaxValue)
+                {
+                    return (int)n;
+                }
+                else
+                {
+                    throw new ArithmeticException("Result does not fit into a int.");
+                }
             }
         }
 
 
+        /// <summary>
+        /// Return the fraction with the value equivalent to the closest whole number that is greater the the value of the fraction.
+        /// </summary>
+        public int IntCeiling
+        {
+            get
+            {
+                var n = (numerator + denominator - 1) / denominator;
+                if (n >= int.MinValue && n <= int.MaxValue)
+                {
+                    return (int)n;
+                }
+                else
+                {
+                    throw new ArithmeticException("Result does not fit into a int.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an array of fraction that correspondes to integer division betwee the numerator and denominator
+        /// The position 0 in the array is the quocient of the division and position 1 in the array is the remainder, so that 
+        /// 
+        /// if 
+        /// 
+        /// f = a / b = q + r
+        /// 
+        /// then
+        /// 
+        /// f = f.QuocientAndRemainder[0] + f.QuocientAndRemainder[1]
+        /// 
+        /// 
+        /// 
+        /// </summary>
+        public Fraction[] QuocientAndRemainder
+        {
+            get
+            {
+                var remainder = BigInteger.Zero;
+                var quocient = BigInteger.DivRem(numerator, denominator, out remainder);
+                return new[] { new Fraction(quocient, BigInteger.One), new Fraction(remainder, BigInteger.One) };
+            }
+        }
+
+
+        /// <summary>
+        /// Indicates if this fraction really represent a whole number
+        /// The whole number represented may be greater than an int or a long.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsWhole()
+        {
+            return this.denominator.IsOne;
+        }
+
+        /// <summary>
+        /// Returns the absolute value of this.
+        /// </summary>
+        /// <returns>The absolute value</returns>
+        public Fraction Abs()
+        {
+            // only the numerator has signal
+            return new Fraction(BigInteger.Abs(numerator), denominator);
+        }
+
+        public int Sign
+        {
+            get
+            {
+                // only the numerator has signal
+                return numerator.Sign;
+            }
+
+        }
     }
 
 }
