@@ -535,6 +535,21 @@ namespace ZBRA.Impress
             return m.SelectMany(x => k(x).SelectMany(y => s(x, y).ToMaybe()));
         }
 
+        /// <summary>
+        /// Operate directly on the contained value without unwraping it first. If the value is not present, no action will be taken.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="m"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static Maybe<T> Make<T>(this Maybe<T> m , Action<T> action)
+        {
+            if (m.HasValue)
+            {
+                action(m.Value);
+            }
+            return m;
+        }
 
         /// <summary>
         /// Compares two Maybe objects that augment a type that implements the IComparable interface.
@@ -596,7 +611,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Tansfroms an Ienumarable of Maybe<T> values to a Enumerable of T values removing all non present values in the process
+        /// Tansforms an IEnumarable of Maybe<T> values to a Enumerable of T values removing all non present values in the process
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="all"></param>
@@ -607,7 +622,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Tansfroms an Ienumarable of Nullable<T> values to a Enumerable of T values removing all non present values in the process
+        /// Tansforms an IEnumarable of Nullable<T> values to a Enumerable of T values removing all non present values in the process
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="all"></param>

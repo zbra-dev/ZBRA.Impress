@@ -35,6 +35,9 @@ namespace ZBRA.Impress.Collections
             return MaybeSingle(enumerable.Where(predicate));
         }
 
+        #region Maybe First 
+
+        
         public static Maybe<T> MaybeFirst<T>(this IEnumerable<T> enumerable) where T : class
         {
             return (enumerable == null || !enumerable.Any()) ? Maybe<T>.Nothing : enumerable.First().ToMaybe();
@@ -47,8 +50,31 @@ namespace ZBRA.Impress.Collections
 
         public static Maybe<T> MaybeFirst<T>(this IEnumerable<Nullable<T>> enumerable) where T : struct
         {
-            return enumerable == null ? Maybe<T>.Nothing : enumerable.FirstOrDefault<Nullable<T>>().ToMaybe<T>();
+            return (enumerable == null || !enumerable.Any()) ? Maybe<T>.Nothing : enumerable.First<Nullable<T>>().ToMaybe<T>();
         }
+
+        #endregion
+
+        #region Maybe Last
+
+
+        public static Maybe<T> MaybeLast<T>(this IEnumerable<T> enumerable) where T : class
+        {
+            return (enumerable == null || !enumerable.Any()) ? Maybe<T>.Nothing : enumerable.Last().ToMaybe();
+        }
+
+        public static Maybe<T> MaybeLast<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate) where T : class
+        {
+            return MaybeLast(enumerable.Where(predicate));
+        }
+
+        public static Maybe<T> MaybeLast<T>(this IEnumerable<Nullable<T>> enumerable) where T : struct
+        {
+            return (enumerable == null || !enumerable.Any()) ? Maybe<T>.Nothing : enumerable.Last<Nullable<T>>().ToMaybe<T>();
+        }
+
+        #endregion
+
 
         public static Maybe<T> ElementAtRandom<T>(this ICollection<T> collection, Random randomNumberGenerator)
         {
