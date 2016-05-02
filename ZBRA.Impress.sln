@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress", "ZBRA.Impress\ZBRA.Impress.csproj", "{90BDB0D6-7B03-42B8-954C-37ACB0D9AEE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.ExtraCollections", "ZBRA.Impress.Collections\ZBRA.Impress.ExtraCollections.csproj", "{A3E8BAA6-5E33-4B30-BC28-88D518583D1E}"
@@ -15,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.Testing", "ZBRA.Impress.Testing\ZBRA.Impress.Testing.csproj", "{D261E53E-983C-4217-B470-54CE160076D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZBRA.Impress.Mail", "ZBRA.Impress.Mail\ZBRA.Impress.Mail.csproj", "{77156191-A039-4EA9-8362-E1BCCA47F48E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,10 @@ Global
 		{D261E53E-983C-4217-B470-54CE160076D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D261E53E-983C-4217-B470-54CE160076D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D261E53E-983C-4217-B470-54CE160076D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77156191-A039-4EA9-8362-E1BCCA47F48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77156191-A039-4EA9-8362-E1BCCA47F48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77156191-A039-4EA9-8362-E1BCCA47F48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77156191-A039-4EA9-8362-E1BCCA47F48E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

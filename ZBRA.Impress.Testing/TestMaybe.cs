@@ -11,6 +11,35 @@ namespace ZBRA.Impress.Testing
     {
 
         [TestMethod]
+        public void TestMaybeZip()
+        {
+            Maybe<int> x = 2.ToMaybe();
+            Maybe<int> y = 3.ToMaybe();
+           
+            var  r = from a in x 
+                    from b in y 
+                    select a * b;
+
+            Assert.AreEqual(6, r.Value);
+
+            r = x.Zip(y , (a, b) => a * b);
+
+            Assert.AreEqual(6, r.Value);
+
+            Maybe<int> z = Maybe<int>.Nothing;
+
+            r = from a in x
+                           from b in z
+                           select a * b;
+
+            Assert.IsFalse(r.HasValue);
+
+            r = x.Zip(z, (a, b) => a * b);
+
+            Assert.IsFalse(r.HasValue);
+        }
+
+        [TestMethod]
         public void TestMaybeSingle()
         {
             var n = Enumerable.Empty<int>().Concat(1);

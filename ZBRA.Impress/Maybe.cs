@@ -710,6 +710,62 @@ namespace ZBRA.Impress
 
             return Maybe<E>.Nothing;
         }
+
+        /// <summary>
+        /// Applies a binary operation to the contents of two maybe values, similar to IEnumerable.Zip.
+        /// 
+        /// This method is also equivalent to the do-notation 
+        /// 
+        /// var result = from a in x
+        ///              from b in y
+        ///              select a + b; 
+        /// 
+        /// var result = x.zip(y, (a,b) => a + b);
+        /// 
+        /// </summary>
+        /// <typeparam name="T">The type in the first Maybe</typeparam>
+        /// <typeparam name="S">The type in the second Maybe</typeparam>
+        /// <typeparam name="R">The result type</typeparam>
+        /// <param name="m">The target maybe</param>
+        /// <param name="other">The other maybe to zip with the target.</param>
+        /// <param name="function">The function to apply if both maybe have values</param>
+        /// <returns>The result of the function wraped in a maybe</returns>
+        public static Maybe<R> Zip<T, S, R>(this Maybe<T> m, Maybe<S> other, Func<T, S, R > function)
+        {
+            if (m.HasValue && other.HasValue)
+            {
+                return function(m.Value, other.Value).ToMaybe();
+            }
+            return Maybe<R>.Nothing;
+        }
+
+        /// <summary>
+        /// Applies a binary operation to the contents of two maybe values, similar to IEnumerable.Zip.
+        /// 
+        /// This method is also equivalent to the do-notation 
+        /// 
+        /// var result = from a in x
+        ///              from b in y
+        ///              select a + b; 
+        /// 
+        /// var result = x.zip(y, (a,b) => a + b);
+        /// 
+        /// </summary>
+        /// <typeparam name="T">The type in the first Maybe</typeparam>
+        /// <typeparam name="S">The type in the second Maybe</typeparam>
+        /// <typeparam name="R">The result type</typeparam>
+        /// <param name="m">The target maybe</param>
+        /// <param name="other">The other maybe to zip with the target.</param>
+        /// <param name="function">The function to apply if both maybe have values</param>
+        /// <returns>The result of the function</returns>
+        public static Maybe<R> Zip<T, S, R>(this Maybe<T> m, Maybe<S> other, Func<T, S, Maybe<R>> function)
+        {
+            if (m.HasValue && other.HasValue)
+            {
+                return function(m.Value, other.Value);
+            }
+            return Maybe<R>.Nothing;
+        }
     }
 
 
