@@ -55,7 +55,7 @@ of ```GetHashCode``` in more complex scenarios, and some utilitary extentions fo
 # ZBRA Impress Extra Collections
 
 This is an assemby dedicated to new types of collections that are not available in the standard .NET API. These include the bidirectionay dictionary (for mapping keys to values and values back to their keys),
-and IMultiSet interface for [bags](http://en.wikipedia.org/wiki/Multiset), a IMltiMap interface for dictionary like collections that map keys to collections of values and a simple interface for a Concurrent Dictionary.
+and IMultiSet interface for [bags](http://en.wikipedia.org/wiki/Multiset), a IMultiMap interface for dictionary like collections that map keys to collections of values and a simple interface for a Concurrent Dictionary.
 
 All these new extra collections have a readonly version and a separate interface for each of the readonly versions. This allows for better classification and empowers better encapsulation by 
 strictly adhere to the [Interface Segregation Principle](http://en.wikipedia.org/wiki/Interface_segregation_principle).
