@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,7 @@ namespace ZBRA.Impress
     /// Represent a value that might not be present.
     /// </summary>
     /// <typeparam name="T">The type of the value</typeparam>
-    public struct Maybe<T>
+    public struct Maybe<T> : IEnumerable<T>
     {
 
         public readonly static Maybe<T> Nothing = new Maybe<T>(false);
@@ -96,13 +97,54 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Returns the value in inside the maybe object. If the value is not present, return the given default value.
+        /// Returns the value inside the maybe object. If the value is not present, return the given default value.
         /// </summary>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
         public T Or(T defaultValue)
         {
             return hasValue ? obj : defaultValue;
+        }
+
+        /// <summary>
+        /// Returns the value inside the maybe object. If the value is not present, call the defaultValueSupplier function and return that value (it can be null).
+        /// This method is preferable to Or() when the default value must be calculated or is not otherwise immediately available.
+        /// </summary>
+        /// <param name="defaultValueSupplier">A function that retrives the default value</param>
+        /// <returns></returns>
+        public T OrGet(Func<T> defaultValueSupplier)
+        {
+            return hasValue ? obj : defaultValueSupplier();
+        }
+
+        /// <summary>
+        /// Returns the value inside the maybe object. If the value is not present, call the exceptionSupplier function and throw the exception returned by it.
+        /// 
+        /// There is not OrThrow(Exception) because that will create the exception and capture the stacktrace even if it is not needed. Using a lambda is more efficient because the exception will only be created if needed.
+        /// </summary>
+        /// <typeparam name="E">The type of the exception</typeparam>
+        /// <param name="exceptionSupplier"></param>
+        /// <returns></returns>
+        public T OrThrow<E>(Func<E> exceptionSupplier) where E : Exception
+        {
+            if (hasValue)
+            {
+                return obj;
+            }
+
+            throw exceptionSupplier();
+        }
+
+        /// <summary>
+        /// Does something with the object with the maybe object. If this maybe has no value, no action is taken.
+        /// </summary>
+        /// <param name="consumer"></param>
+        public void Consume(Action<T> consumer)
+        {
+            if (hasValue)
+            {
+                consumer(obj);
+            }
         }
 
         public bool Equals(Maybe<T> other)
@@ -158,7 +200,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnforms to another Maybe object with the same value unless the present value equals the given value.
+        /// Transforms to another Maybe object with the same value unless the present value equals the given value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -172,7 +214,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnforms to another Maybe object with the same value unless the given predicate evaluates to true.
+        /// Transforms to another Maybe object with the same value unless the given predicate evaluates to true.
         /// In that case return Maybe.Nothing.
         /// </summary>
         /// <param name="predicate"></param>
@@ -196,6 +238,21 @@ namespace ZBRA.Impress
         public Maybe<T> ToMaybe()
         {
             return this;
+        }
+
+        public IEnumerable<T> AsEnumerable()
+        {
+            return this.HasValue ? Enumerable.Repeat(this.Value, 1) : Enumerable.Empty<T>();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return AsEnumerable().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return AsEnumerable().GetEnumerator();
         }
     }
 
@@ -457,7 +514,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnform the Maybe acording to the given function. Similar to IEnumerable.Select.
+        /// Transform the Maybe acording to the given function. Similar to IEnumerable.Select.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="V"></typeparam>
@@ -470,7 +527,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnform the Maybe acording to the given function. Similar to IEnumerable.Select.
+        /// Transform the Maybe acording to the given function. Similar to IEnumerable.Select.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="V"></typeparam>
@@ -483,7 +540,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnform the Maybe acording to the given function. Similar to IEnumerable.Select.
+        /// Transform the Maybe acording to the given function. Similar to IEnumerable.Select.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="V"></typeparam>
@@ -496,7 +553,7 @@ namespace ZBRA.Impress
         }
 
         /// <summary>
-        /// Trasnform the Maybe acording to the given function. Similar to IEnumerable.Select.
+        /// Transform the Maybe acording to the given function. Similar to IEnumerable.Select.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="V"></typeparam>
@@ -634,7 +691,7 @@ namespace ZBRA.Impress
 
         /// <summary>
         /// Transforms to another Maybe object with the same value unless the valus is not present.
-        /// In that case retrun a Maybe object encapsulating the alternative given value.
+        /// In that case return a Maybe object encapsulating the alternative given value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="m"></param>

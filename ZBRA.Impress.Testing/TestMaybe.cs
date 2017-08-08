@@ -63,6 +63,54 @@ namespace ZBRA.Impress.Testing
         }
 
         [TestMethod]
+        public void TestMaybeAsEnumerable()
+        {
+            var name = "Hello".ToMaybe();
+            int count = 0;
+            foreach (var n in name)
+            {
+                count++;
+                Assert.AreEqual("Hello", n);
+            }
+
+            Assert.AreEqual(1, count);
+
+            name = "".ToMaybe();
+            count = 0;
+            foreach (var n in name)
+            {
+                count++;
+               
+            }
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void TestMaybeOrGet()
+        {
+            Assert.AreEqual("Hello", "".ToMaybe().OrGet(() => "Hello"));
+        }
+
+        [TestMethod, ExpectedException(typeof(Exception))]
+        public void TestMaybeOrThrow()
+        {
+            "".ToMaybe().OrThrow(() => new Exception());
+        }
+
+        [TestMethod]
+        public void TestMaybeConsume()
+        {
+            int count = 0;
+            "Hello".ToMaybe().Consume(name =>
+            {
+                count++;
+            });
+
+            Assert.AreEqual(1, count);
+        }
+
+        [TestMethod]
         public void TestMaybeSingleMoreElements()
         {
             var n = Enumerable.Empty<int>().Concat(2).Concat(1);

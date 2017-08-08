@@ -37,6 +37,7 @@ namespace ZBRA.Impress.Testing
             var array = enumerable.ToArray();
             var hash1 = Hash.Create(array[0]).Add(array[1]).Add(array[2]).GetHashCode();
             var hash2 = Hash.Create(enumerable).GetHashCode();
+
             Assert.AreEqual(hash1, hash2);
         }
     }
